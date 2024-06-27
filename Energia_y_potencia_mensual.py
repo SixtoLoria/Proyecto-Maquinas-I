@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 # Leer el archivo Excel con los datos
 df = pd.read_excel('Gráfico_consumo_edificio_EIE.xlsx', header=None, names=['Fecha', 'Hora', 'tipo de dia', 'Potencia'])
@@ -17,7 +18,7 @@ df['Potencia'] = pd.to_numeric(df['Potencia'], errors='coerce')
 df = df.dropna(subset=['Potencia'])
 
 # Calcular energía mensual y potencia mensual en watts
-energia_mensual_kWh = df['Potencia'].mean() * 5 / 60 / 1000  # muestras cada 5 min, convertido a kWh
+energia_mensual_kWh = (1/7) * (1/12000) * df['Potencia'].sum()      # muestras cada 5 min, convertido a kWh
 potencia_mensual_kW = df['Potencia'].mean()   / 1000                # Promedio de potencia en watts
 
 print(f"Energía mensual en kWh: {energia_mensual_kWh}")
@@ -35,3 +36,6 @@ elif energia_mensual_kWh > 3000 and potencia_mensual_kW > 8000:
     
 else:
     Costo = energia_mensual_kWh * 79.96
+    
+    
+print(f"El costo es {Costo}")
