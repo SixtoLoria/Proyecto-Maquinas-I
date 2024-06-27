@@ -17,7 +17,7 @@ df['Potencia'] = pd.to_numeric(df['Potencia'], errors='coerce')
 df = df.dropna(subset=['Potencia'])
 
 # Calcular energía mensual y potencia mensual en watts
-energia_mensual_kWh = df['Potencia'].sum() * 720 / 1000 / 1000  # 720 horas por mes, convertido a kWh
+energia_mensual_kWh = df['Potencia'].sum() * 720 / 1000  # 720 horas por mes, convertido a kWh
 potencia_mensual_W = df['Potencia'].mean()                      # Promedio de potencia en watts
 
 print(f"Energía mensual en kWh: {energia_mensual_kWh}")
