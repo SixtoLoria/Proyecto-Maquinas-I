@@ -17,8 +17,21 @@ df['Potencia'] = pd.to_numeric(df['Potencia'], errors='coerce')
 df = df.dropna(subset=['Potencia'])
 
 # Calcular energía mensual y potencia mensual en watts
-energia_mensual_kWh = df['Potencia'].sum() * 720 / 1000  # 720 horas por mes, convertido a kWh
-potencia_mensual_W = df['Potencia'].mean()                      # Promedio de potencia en watts
+energia_mensual_kWh = df['Potencia'].mean() * 5 / 60 / 1000  # muestras cada 5 min, convertido a kWh
+potencia_mensual_kW = df['Potencia'].mean()   / 1000                # Promedio de potencia en watts
 
 print(f"Energía mensual en kWh: {energia_mensual_kWh}")
-print(f"Potencia mensual en W: {potencia_mensual_W}")
+print(f"Potencia mensual en KW: {potencia_mensual_kW}")
+
+Costo = 0
+
+
+# ------------------- calculo del costo -----------------
+
+if energia_mensual_kWh > 3000 and potencia_mensual_kW <= 8000:
+    Costo = energia_mensual_kWh * 46.03 + 59639.20
+elif energia_mensual_kWh > 3000 and potencia_mensual_kW > 8000:
+    Costo = energia_mensual_kWh * 46.03 + (potencia_mensual_kW * 7454.90)
+    
+else:
+    Costo = energia_mensual_kWh * 79.96
