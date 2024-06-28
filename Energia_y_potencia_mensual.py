@@ -29,6 +29,9 @@ Costo = 0
 energia_anual_kWh = energia_mensual_kWh * 12
 potencia_anual_kW = potencia_mensual_kW * 12
 
+print(f"La energia anual son en kW:  {energia_anual_kWh:.2f}")
+print(f"La potencia anual son en kW: {potencia_anual_kW:.2f}")
+
 # ------------------- calculo del costo -----------------
 
 if energia_mensual_kWh > 3000 and potencia_mensual_kW <= 8:
