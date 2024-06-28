@@ -19,10 +19,10 @@ df = df.dropna(subset=['Potencia'])
 
 # Calcular energía mensual y potencia mensual en watts
 energia_mensual_kWh = (1/7) * (1/12000) * df['Potencia'].sum()      # muestras cada 5 min, convertido a kWh
-potencia_mensual_kW = df['Potencia'].mean()   / 1000                # Promedio de potencia en watts
+potencia_mensual_kW = df['Potencia'].mean()   / 1000                # Promedio de potencia en Kwatts
 
-print(f"Energía mensual en kWh: {energia_mensual_kWh}")
-print(f"Potencia mensual en KW: {potencia_mensual_kW}")
+print(f"Energía mensual en kWh: {energia_mensual_kWh:.2f}")
+print(f"Potencia mensual en KW: {potencia_mensual_kW:.2f}")
 
 Costo = 0
 
@@ -38,4 +38,15 @@ else:
     Costo = energia_mensual_kWh * 79.96
     
     
-print(f"El costo es {Costo}")
+print(f"El costo es {Costo:.2f}")
+
+
+# ------------------- calculo de perdidas -----------------
+P_FE = 1650 
+P_cu = 9500 
+S_nom = 1000 * 10 ** 3 
+fp = 0.9  # nominal
+
+Perdidas = P_FE + P_cu * (df['Potencia'].mean()/S_nom * fp) ** 2
+
+print(f"Las perdidas son: {Perdidas:.2f}")
