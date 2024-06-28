@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 print(  "==============================================================\n"
-        "Para el transformador Original, se tienen los siguientes datos\n"
+        "Para el transformador de 75kVA, se tienen los siguientes datos\n"
         "==============================================================\n"
         )
 
@@ -53,9 +53,9 @@ print(f"El costo mensual de la energia consumida es:   {Costo:.2f}")
 
 
 # ------------------- calculo de perdidas -----------------
-P_FE = 1650 
-P_cu = 9500 
-S_nom = 1000 * 10 ** 3 
+P_FE = 245 
+P_cu = 1000 
+S_nom = 75 * 10 ** 3 
 fp = 0.9  # nominal
 
 Perdidas_mensuales_kWh = (1/7) * (1/12000) * ( P_FE + P_cu * (df['Potencia'].mean()/S_nom * fp) ** 2 ) # en wats
