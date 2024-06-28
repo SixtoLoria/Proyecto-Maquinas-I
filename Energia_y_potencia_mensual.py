@@ -7,7 +7,7 @@ print(  "==============================================================\n"
         )
 
 # Leer el archivo Excel con los datos
-df = pd.read_excel('Gráfico_consumo_edificio_EIE.xlsx', header=None, names=['Fecha', 'Hora', 'tipo de dia', 'Potencia'])
+df = pd.read_excel('Gráfico_consumo_edificio_EIE2.xlsx',header=None,names=['Fecha', 'Hora', 'Potencia'])
 
 # Eliminar filas con NaN en 'Fecha' o 'Hora'
 df = df.dropna(subset=['Fecha', 'Hora'])
@@ -23,7 +23,7 @@ df['Potencia'] = pd.to_numeric(df['Potencia'], errors='coerce')
 df = df.dropna(subset=['Potencia'])
 
 # Calcular energía mensual y potencia mensual en watts
-energia_mensual_kWh = (1/7) * (1/12000) * df['Potencia'].sum()      # muestras cada 5 min, convertido a kWh
+energia_mensual_kWh = (1/7) * (1/12000) * (df['Potencia'].sum())      # muestras cada 5 min, convertido a kWh
 potencia_mensual_kW = df['Potencia'].mean()   / 1000                # Promedio de potencia en Kwatts
 
 print(f"Energía mensual consumida en kWh:              {energia_mensual_kWh:.2f}")
