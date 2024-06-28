@@ -26,12 +26,14 @@ print(f"Potencia mensual en KW: {potencia_mensual_kW:.2f}")
 
 Costo = 0
 
+energia_anual_kWh = energia_mensual_kWh * 12
+potencia_anual_kW = potencia_mensual_kW * 12
 
 # ------------------- calculo del costo -----------------
 
-if energia_mensual_kWh > 3000 and potencia_mensual_kW <= 8000:
+if energia_mensual_kWh > 3000 and potencia_mensual_kW <= 8:
     Costo = energia_mensual_kWh * 46.03 + 59639.20
-elif energia_mensual_kWh > 3000 and potencia_mensual_kW > 8000:
+elif energia_mensual_kWh > 3000 and potencia_mensual_kW > 8:
     Costo = energia_mensual_kWh * 46.03 + (potencia_mensual_kW * 7454.90)
     
 else:
@@ -47,6 +49,23 @@ P_cu = 9500
 S_nom = 1000 * 10 ** 3 
 fp = 0.9  # nominal
 
-Perdidas = P_FE + P_cu * (df['Potencia'].mean()/S_nom * fp) ** 2
+Perdidas = P_FE + P_cu * (df['Potencia'].mean()/S_nom * fp) ** 2  # en wats
 
-print(f"Las perdidas son: {Perdidas:.2f}")
+Perdidas_kW = Perdidas / 1000
+
+
+print(f"Las perdidas son en kW: {Perdidas_kW:.2f}")
+
+# ------------------- calculo del costo con perdidas -----------------
+
+if energia_mensual_kWh > 3000 and potencia_mensual_kW <= 8:
+    
+    Costo_P = (energia_mensual_kWh + Perdidas_kW) * 46.03 + 59639.20 * (1/7) * (1/12000)
+    
+elif energia_mensual_kWh > 3000 and (potencia_mensual_kW + Perdidas_kW) > 8:
+    Costo_P = (energia_mensual_kWh + Perdidas_kW) * 46.03 + (potencia_mensual_kW * 7454.90) * (1/7) * (1/12000)
+    
+else:
+    Costo_P = (energia_mensual_kWh + Perdidas_kW) * 79.96
+    
+print(f"El costo es considerando perdidas es: {Costo_P:.2f}")
